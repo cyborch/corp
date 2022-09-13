@@ -1,0 +1,10 @@
+namespace: default
+image: cyborch/corp
+
+virtualHosts:
+  - hostname: proxy.example.com
+    scheme: http
+    origin: https://google.com
+    enableCors: true
+    skipHeaders:
+      - X-Frame-Options

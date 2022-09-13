@@ -1,0 +1,18 @@
+# Server configuration
+# The server listens on 0.0.0.0 on the port specified here
+server:
+  port: 8080
+
+
+# Virtual hosts can be specified here. Each virtual host forwards
+# requests to a given hostname on a given protocol (scheme) to the 
+# specified origin.
+# CORS can be enabled or disabled for a given virtual host
+# Also, any unwanted headers can be skipped from the origin response
+virtualHosts:
+  - hostname: localhost:8080
+    scheme: http
+    origin: https://www.google.com
+    enableCors: true
+    skipHeaders:
+      - X-Frame-Options

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: corp
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: corp
+  template:
+    metadata:
+      labels:
+        app: corp
+    spec:
+      containers:
+      - name: corp
+        image: {{ .Values.image }}
+        resources:
+          requests:
+            memory: "2Mi"
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/configs
+      volumes:
+        - name: config-volume
+          configMap:
+            name: proxy-config

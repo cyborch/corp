@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: proxy-config
+  namespace: {{ .Values.namespace }}
+data:
+  proxy.yml: |
+    server:
+      port: 8080
+    virtualHosts:
+      {{- range $v := .Values.virtualHosts }}
+      - hostname: {{ $v.hostname }}
+        scheme: {{ $v.scheme }}
+        origin: {{ $v.origin }}
+        enableCors: {{ default $v.enableCors "false" }}
+        skipHeaders:
+          {{ $v.skipHeaders | toYaml }}
+      {{- end }}
