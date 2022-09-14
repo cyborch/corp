@@ -8,9 +8,9 @@ server:
 
 
 virtualHosts:
-  - hostname: localhost:8080
+  - hostname: proxy.example.com
     scheme: http
-    origin: https://google.com
+    origin: https://www.google.com
     enableCors: true
     skipHeaders:
       - X-Frame-Options
@@ -24,4 +24,11 @@ specified origin.
 
 CORS can be enabled or disabled for a given virtual host
 
-Also, any unwanted headers can be skipped from the origin response
+Also, any unwanted headers can be skipped from the origin response by setting
+the `virtualHosts` array.
+
+* `hostname` the hostname where the corp service is hosted.
+* `scheme` the request scheme used (e.g. `http` or `https`).
+* `origin` the name of the service which requests are forwarded to.
+* `enableCors` sets CORS headers in the forwarded response from origin if true.
+* `skipHeaders` removes any named headers in the forwarded response from origin.
