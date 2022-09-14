@@ -1,16 +1,18 @@
-FROM golang:1.19-alpine as build
+FROM golang:1.19.1-alpine3.15 as build
 
 RUN apk add --update make
 
 WORKDIR /app
 
-COPY go.mod ./
+# Download project dependencies
+COPY go.mod go.sum ./
 RUN go mod download
 
+# Build corp binary
 COPY ./ ./
 RUN make corp
 
-FROM golang:1.19-alpine as final
+FROM alpine:3.15 as final
 
 WORKDIR /app
 RUN mkdir -p bin 
