@@ -152,8 +152,10 @@ func handlerFunc(conf config.Configurations) http.HandlerFunc {
 }
 
 func Listen() {
-	conf := config.Config()
-	address := fmt.Sprintf("0.0.0.0:%d", conf.Server.Port)
-	fmt.Printf("[corp] [%s]: Listening on %s\n", time.Now(), address)
-	http.ListenAndServe(address, handlerFunc(conf))
+	conf, err := config.Config()
+	if err == nil {
+		address := fmt.Sprintf("0.0.0.0:%d", conf.Server.Port)
+		fmt.Printf("[corp] [%s]: Listening on %s\n", time.Now(), address)
+		http.ListenAndServe(address, handlerFunc(conf))
+	}
 }
