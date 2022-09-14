@@ -4,8 +4,14 @@ The Cross Origin enabling Reverse Proxy is a small, fast reverse proxy server, w
 can enable CORS for services which do not enable it themselves, or remove unwanted
 or unneeded extra headers from responses.
 
-This is especially useful when accessing services which do not allow shoing their
-content in iframes (i.e. by setting `X-Frame-Options`).
+## Motivation
+
+This was built for a search engine where the intention was to lead as much traffic as
+possible back to the crawled sites by showing the crawled page immediately after the
+search result.
+
+In order to allow this, CORS headers must be set, and frame options headers must be
+removed. This is a reverse proxy made especially for that purpose.
 
 ## Configuration
 
@@ -46,3 +52,9 @@ by running:
 ```
 make helm-install
 ```
+
+## Attribution
+
+There are many implementations of reverse proxies in Go, and reading them helped
+in the development of this product. In particular, [this](https://dev.to/b0r/implement-reverse-proxy-in-gogolang-2cp4)
+post by b0r helped a lot and formed the baseline for the development.
