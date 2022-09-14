@@ -29,7 +29,11 @@ make all
 
 ## Deployment
 
-### Docker
+An image has been deployed to [Docker Hub](https://hub.docker.com/r/cyborch/corp).
+Details about deployment using the official image can be found on the in the
+[Docker Hub README](docs/docker_hub.md)
+
+### Building your own docker image
 
 The `IMAGE_NAME` in the root `Makefile` specifies the docker image tag used.
 Update it as appropriate before building docker images.
