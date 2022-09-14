@@ -15,6 +15,5 @@ FROM golang:1.19-alpine as final
 WORKDIR /app
 RUN mkdir -p bin 
 COPY --from=build /app/bin/corp /app/bin/corp
-COPY ./configs ./configs
 
 CMD /app/bin/corp
