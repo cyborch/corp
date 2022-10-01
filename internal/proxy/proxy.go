@@ -87,7 +87,7 @@ func writeWithReplacedOrigin(req *http.Request,
 }
 
 func logRequest(req *http.Request, since time.Time, status int) {
-	elapsed := time.Now().Sub(since).Seconds()
+	elapsed := time.Since(since).Seconds()
 	fmt.Printf("[corp] [%s]: %s / %s %f %d %s\n",
 		since,
 		req.Method,
@@ -129,7 +129,7 @@ func handlerFunc(conf config.Configurations) http.HandlerFunc {
 		for key, values := range originServerResponse.Header {
 			skip := false
 			for _, header := range vh.SkipHeaders {
-				if strings.ToLower(key) == strings.ToLower(header) {
+				if strings.EqualFold(key, header) {
 					// Skip any unwanted headers
 					skip = true
 					continue
