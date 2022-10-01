@@ -1,6 +1,7 @@
 package proxy
 
 import (
+	"compress/gzip"
 	"fmt"
 	"io"
 	"net/http"
@@ -52,26 +53,48 @@ func writeWithReplacedOrigin(req *http.Request,
 	vh config.VirtualHostConfigurations) {
 
 	if strings.HasPrefix(res.Header.Get("Content-Type"), "text/") {
+		var compressed = false
 		rw.Header().Del("Content-Length")
 		rw.Header().Add("Transfer-Encoding", "chunked")
+		if rw.Header().Get("Content-Encoding") == "gzip" {
+			compressed = true
+			rw.Header().Del("Content-Encoding")
+		}
+
 		rw.WriteHeader(res.StatusCode)
+
+		var gzipReader *gzip.Reader = nil
+		gzipReader, _ = gzip.NewReader(res.Body)
 
 		length := len(vh.Origin)
 		buf := make([]byte, length)
-		count, _ := res.Body.Read(buf)
+		var count int
+		if compressed {
+			count, _ = gzipReader.Read(buf)
+		} else {
+			count, _ = res.Body.Read(buf)
+		}
 
 		for count == length {
 			if string(buf) == vh.Origin {
 				rw.Write([]byte(vh.Scheme))
 				rw.Write([]byte("://"))
 				rw.Write([]byte(vh.Hostname))
-				count, _ = res.Body.Read(buf)
+				if compressed {
+					count, _ = gzipReader.Read(buf)
+				} else {
+					count, _ = res.Body.Read(buf)
+				}
 			} else {
 				rw.Write(buf[:1])
 				ring := ringbuffer.New(length)
 				ring.Write(buf[1:length])
 				next := make([]byte, 1)
-				count, _ = res.Body.Read(next)
+				if compressed {
+					count, _ = gzipReader.Read(next)
+				} else {
+					count, _ = res.Body.Read(next)
+				}
 				if count > 0 {
 					ring.Write(next)
 					count, _ = ring.Read(buf)
