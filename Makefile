@@ -8,3 +8,7 @@ include scripts/*.mk
 all: corp
 
 clean: corp-clean docker-clean
+
+.PHONY: dev
+dev:
+	go run cmd/corp/main.go
