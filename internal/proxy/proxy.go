@@ -33,6 +33,17 @@ func setOriginUrl(req *http.Request, vh config.VirtualHostConfigurations) {
 	req.RequestURI = ""
 }
 
+func removeProxyHeaders(req *http.Request, vh config.VirtualHostConfigurations) {
+	req.Header.Set("Referer", vh.Origin)
+	req.Header.Del("X-Scheme")
+	req.Header.Del("X-Forwarded-Host")
+	req.Header.Del("X-Forwarded-Proto")
+	req.Header.Del("X-Real-Ip")
+	req.Header.Del("X-Forwarded-Port")
+	req.Header.Del("X-Request-Id")
+	req.Header.Del("X-Forwarded-For")
+}
+
 // Write body from origin request body where origin urls are replaced
 // proxy hostname urls.
 func writeWithReplacedOrigin(req *http.Request,
@@ -98,6 +109,7 @@ func handlerFunc(conf config.Configurations) http.HandlerFunc {
 		}
 
 		setOriginUrl(req, *vh)
+		removeProxyHeaders(req, *vh)
 
 		// save the response from the origin server
 		client := &http.Client{
