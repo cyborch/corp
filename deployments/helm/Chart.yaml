@@ -1,4 +1,4 @@
 apiVersion: v1
 description: Cross Origin enabling Reverse Proxy
 name: corp
-version: 1.0.0
+version: 1.1.0
