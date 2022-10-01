@@ -144,7 +144,7 @@ func handlerFunc(conf config.Configurations) http.HandlerFunc {
 			}
 
 			if strings.ToLower(key) == "location" {
-				location := strings.Replace(values[0], vh.Origin, fmt.Sprintf("%s://%s", vh.Scheme, vh.Hostname), 0)
+				location := strings.Replace(values[0], vh.Origin, fmt.Sprintf("%s://%s", vh.Scheme, vh.Hostname), -1)
 				rw.Header().Add(key, location)
 				continue
 			}
