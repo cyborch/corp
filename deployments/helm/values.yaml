@@ -1,5 +1,5 @@
 namespace: default
-image: cyborch/corp
+image: cyborch/corp:1.1.0
 
 virtualHosts:
   - hostname: proxy.example.com
