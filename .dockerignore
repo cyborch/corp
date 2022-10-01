@@ -3,3 +3,12 @@ bin
 
 # Build scripts
 build
+
+# Github specific
+.github
+
+# Documentation
+docs
+
+# Deployment information
+deployments

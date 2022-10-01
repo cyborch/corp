@@ -13,6 +13,5 @@ data:
         scheme: {{ $v.scheme }}
         origin: {{ $v.origin }}
         enableCors: {{ default $v.enableCors "false" }}
-        skipHeaders:
-          {{ $v.skipHeaders | toYaml }}
+        skipHeaders: {{ $v.skipHeaders | toYaml | nindent 10 }}
       {{- end }}
