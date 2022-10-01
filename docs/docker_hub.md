@@ -9,6 +9,7 @@
 # Supported tags and respective `Dockerfile` links
 
 * [latest](https://github.com/cyborch/corp/blob/main/build/Dockerfile)
+* [v1.1.0](https://github.com/cyborch/corp/blob/v1.1.0/build/Dockerfile)
 * [v1.0.0](https://github.com/cyborch/corp/blob/v1.0.0/build/Dockerfile)
 
 # What is corp?
